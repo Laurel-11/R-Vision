@@ -10,7 +10,7 @@
 
 **基于 RISC-V 架构与 OpenHarmony 的原生图像隐写与高性能处理引擎**
 
-[查看演示](#-运行演示-demo) • [核心技术](#-核心技术-technology) • [快速开始](#-快速开始-quick-start)
+[核心技术](#-核心技术-technology) • [快速开始](#-快速开始-quick-start)
 
 </div>
 
@@ -39,11 +39,6 @@
 - **无依赖**：不使用 OpenCV 等重型库，纯手写算法实现。
 - **全流程**：打通了从 `PhotoViewPicker` 选图 -> `PixelMap` 解码 -> `ArrayBuffer` 修改 -> UI 渲染的全链路。
 
-## 🖼️ 运行演示 (Demo)
-
-| 加密前 (Original) | 性能监控 (Monitor) | 解密演示 (Decoded) |
-|:---:|:---:|:---:|
-| ![Original](resources/base/media/app_icon.png) | *(此处建议替换为你的仪表盘截图)* | *(此处建议替换为解密弹窗截图)* |
 
 ## 🛠️ 核心技术 (Technology)
 
@@ -59,3 +54,55 @@ for (let i = 0; i < pixelData.length; i += 4) {
   // 清零最低位 (Mask: 11111110) 并写入新比特
   pixelData[i + offset] = (pixelData[i + offset] & 0xFE) | bit; 
 }
+```
+
+### 2. 开发环境规格
+- **硬件设备**: SpacemiT K1 (RISC-V 64bit)
+- **操作系统**: OpenHarmony 5.0 Release
+- **开发工具**: DevEco Studio 5.0.5.310
+- **SDK 版本**: OpenHarmony API 12 (Full SDK)
+
+## 📂 项目结构 (Structure)
+
+```text
+R-Vision
+├── entry/src/main/ets
+│   ├── pages
+│   │   └── Index.ets      // 核心业务逻辑与UI布局 (LSB算法/UI)
+│   └── entryability
+│       └── EntryAbility.ts
+├── build-profile.json5    // 编译架构配置 (RuntimeOS: OpenHarmony)
+└── resources              // 静态资源
+```
+
+## 🚀 快速开始 (Quick Start)
+
+想要在你的 K1 设备上运行此项目？请遵循以下步骤：
+
+### 1. 环境准备
+确保你安装了 **DevEco Studio 5.0+** 并下载了 **OpenHarmony API 12 Full SDK**（注意：Public SDK 可能无法调用底层 Image 写入接口）。
+
+### 2. 克隆代码
+```bash
+git clone [https://github.com/你的用户名/R-Vision.git](https://github.com/你的用户名/R-Vision.git)
+```
+
+### 3. 签名配置 (关键)
+由于 K1 设备通常需要调试签名，请在 `build-profile.json5` 或 IDE 的 **Signing Configs** 中：
+- 取消勾选 "Support HarmonyOS"
+- 确保 `runtimeOS` 设置为 `"OpenHarmony"`
+
+### 4. 编译与安装
+```bash
+# 进入项目目录
+hvigorw assembleHap
+# 或使用 hdc/bm 工具安装
+bm install -p entry/build/default/outputs/default/entry-default-signed.hap
+```
+
+## 🤝 贡献与致谢 (Credits)
+感谢 **进迭时空 (SpacemiT)** 提供 RISC-V 硬件支持，以及 **OpenHarmony 社区** 的技术文档。
+
+---
+
+**Developed with ❤️ by Laurel-11**
