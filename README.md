@@ -84,7 +84,7 @@ R-Vision
 
 ### 2. 克隆代码
 ```bash
-git clone [https://github.com/你的用户名/R-Vision.git](https://github.com/你的用户名/R-Vision.git)
+git clone [https://github.com/Laurel-11/R-Vision.git](https://github.com/Laurel-11/R-Vision.git)
 ```
 
 ### 3. 签名配置 (关键)
